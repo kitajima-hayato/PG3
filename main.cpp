@@ -26,7 +26,7 @@ int recursiveWage(int hours) {
 	int wage = 0;
 	int hourlyRate = 0; // 最初の1時間は100円
 
-	for (int i = 1; i <= hours; ++i) {
+	for (int i = 1; i <= hours; ++i) { 
 		if (i == 1) {
 			hourlyRate = 100;
 		}
