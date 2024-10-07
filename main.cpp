@@ -4,6 +4,7 @@
 #include<iostream>
 #include<ctime>
 #include <thread>
+#include<functional>
 template <typename Type>
 //overload
 Type min(Type a, Type b) {
@@ -51,28 +52,35 @@ int hoursToSurpassRegularWage() {
 typedef bool(*calc)(int);
 
 
-bool Check(int randomnumber) {
-	printf("出目は奇数でしょうか偶数でしょうか\n偶数ならば０、奇数ならば１を入力してください\n");
-	int ans;
-	std::cin >> ans;
-	if (randomnumber % 2 == ans) {
-		std::this_thread::sleep_for(std::chrono::seconds(3));
-		printf("正解！\n");
-		return true;
-	}if (randomnumber % 1 == ans) {
-		std::this_thread::sleep_for(std::chrono::seconds(3));
-		printf("正解！\n");
-		return true;
-	}
-	else {
-		std::this_thread::sleep_for(std::chrono::seconds(3));
-		printf("不正解\n");
-		printf("もう一度！\n");
-		return false;
-	}
+void SetTimeOut(int setTime) {
+	std::this_thread::sleep_for(std::chrono::seconds(setTime));
 }
+int main() {
+	srand(time(0));
 
-void game(calc Check, bool loop) {
+	bool loop = false;
+
+	std::function<bool(int)> Check = [](int randomnumber)->bool {
+		printf("出目は奇数でしょうか偶数でしょうか\n偶数ならば０、奇数ならば１を入力してください\n");
+		int ans;
+		std::cin >> ans;
+		if (randomnumber % 2 == ans) {
+			SetTimeOut(3);
+			printf("正解！\n");
+			return true;
+		}if (randomnumber % 1 == ans) {
+			SetTimeOut(3);
+			printf("正解！\n");
+			return true;
+		}
+		else {
+			SetTimeOut(3);
+			printf("不正解\n");
+			printf("もう一度！\n");
+			return false;
+		}
+		};
+
 	while (!loop) {
 		int randomNumber = rand() % 6 + 1;
 		bool result = Check(randomNumber);
@@ -85,16 +93,6 @@ void game(calc Check, bool loop) {
 			}
 		}
 	}
-}
-
-int main() {
-	srand(time(0));
-
-	bool loop = false;
-	calc p;
-	p = &Check;
-
-	game(p, loop);
 
 
 	return 0;
