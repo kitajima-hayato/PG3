@@ -129,11 +129,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animal.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Lion.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Tiger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animal.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Lion.h" />
+    <ClInclude Include="Tiger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
