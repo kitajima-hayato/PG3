@@ -1,50 +1,51 @@
-#ifndef M_PI
-#define M_PI 3.14
-#endif
-
 #include <iostream>
-#include <cmath>
+#include <list>
+#include <cstring> 
 
-class IShape {
-public:
-    virtual void Size() = 0;
-    virtual void Draw() = 0;
-};
+using namespace std;
 
-class Circle : public IShape {
-private:
-    double radius;
-public:
-    Circle(double r) : radius(r) {}
-    void Size() override {
-        std::cout << "円の面積: " << M_PI * radius * radius << std::endl;
+void displayList(const list<const char*>& stations) {
+    for (const auto& station : stations) {
+        cout << station << " ";
     }
-    void Draw() override {
-        std::cout << "半径: " << radius << " の円を描画します。" << std::endl;
-    }
-};
-
-class Rectangle : public IShape {
-private:
-    double length, width;
-public:
-    Rectangle(double l, double w) : length(l), width(w) {}
-    void Size() override {
-        std::cout << "矩形の面積: " << length * width << std::endl;
-    }
-    void Draw() override {
-        std::cout << "長さ: " << length << "、幅: " << width << " の矩形を描画します。" << std::endl;
-    }
-};
+    cout << endl;
+}
 
 int main() {
-    Circle c(5);
-    c.Size();
-    c.Draw();
 
-    Rectangle r(4, 6);
-    r.Size();
-    r.Draw();
+
+    // 駅名リスト（英語表記）
+    list<const char*> stations_1970s = {
+        "Tokyo", "Kanda", "Akihabara", "Okachimachi", "Ueno", "Uguisudani",
+        "Nippori", "Tabata", "Komagome", "Sugamo", "Otsuka", "Ikebukuro",
+        "Mejiro", "Takadanobaba", "Shin-Okubo", "Shinjuku", "Yoyogi", "Harajuku",
+        "Shibuya", "Ebisu", "Meguro", "Gotanda", "Osaki", "Shinagawa",
+        "Tamachi", "Hamamatsucho", "Shimbashi", "Yurakucho"
+    };
+
+    
+    auto it = stations_1970s.begin();
+    advance(it, 8); 
+    stations_1970s.insert(it, "Nishi-Nippori");
+
+    
+    list<const char*> stations_2019 = stations_1970s;
+
+    
+    list<const char*> stations_2022 = stations_2019;
+    it = stations_2022.begin();
+    advance(it, 22); // Shinagawaの後に追加
+    stations_2022.insert(it, "Takanawa Gateway");
+
+    // 駅リストを表示
+    cout << "Stations in 1970s:" << endl;
+    displayList(stations_1970s);
+
+    cout << "\nStations in 2019:" << endl;
+    displayList(stations_2019);
+
+    cout << "\nStations in 2022:" << endl;
+    displayList(stations_2022);
 
     return 0;
 }
