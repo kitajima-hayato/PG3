@@ -27,10 +27,10 @@ int main() {
         return 1;
     }
 
-    // 文字列を昇順に並び替え
+   
     sort(numbers.begin(), numbers.end());
 
-    // 並び替えた内容をコンソールに出力
+  
     for (const auto& number : numbers) {
         cout << number << endl;
     }
