@@ -1,28 +1,42 @@
-#include <stdio.h>
-#include <cstdlib>
-#include <cstdlib>
+#include <fstream>
+#include <vector>
+#include <cstring>
 #include <iostream>
-#include <ctime>
-#include <thread>
-#include <functional>
-#include "Enemy.h"
-template <typename Type>
-//overload
-Type min(Type a, Type b) {
-	if (a < b) {
-		return static_cast<Type>(a);
-	}
-	else {
-		return static_cast<Type>(b);
-	}
-};
-
-
+#include <string> 
+#include <algorithm>
+#include <sstream>
+using namespace std;
 
 int main() {
-	Enemy* enemy = new Enemy();
-	enemy->Update();
+    vector<string> numbers;
+    ifstream file("File/PG3_2024_03_02.txt");
 
-	delete enemy;
-	return 0;
+    if (file.is_open()) {
+        string line;
+        while (getline(file, line)) {
+            stringstream ss(line);
+            string item;
+            while (getline(ss, item, ',')) {
+                numbers.push_back(item);
+            }
+        }
+        file.close();
+    }
+    else {
+        cout << "Unable to open file" << endl;
+        return 1;
+    }
+
+    // 文字列を昇順に並び替え
+    sort(numbers.begin(), numbers.end());
+
+    // 並び替えた内容をコンソールに出力
+    for (const auto& number : numbers) {
+        cout << number << endl;
+    }
+
+    return 0;
 }
+
+
+
