@@ -1,29 +1,18 @@
 #include <iostream>
 #include <thread>
-#include <mutex>
-#include <condition_variable>
 
 using namespace std;
-
-mutex mtx;
-condition_variable cv;
-int turn = 1;
-
-void printThread(int id) {
-    unique_lock<mutex> lock(mtx);
-    cv.wait(lock, [id] { return id == turn; });
+void Thread(int id) {
     cout << "thread " << id << endl;
-    turn++;
-    cv.notify_all();
 }
 
 int main() {
-    thread t1(printThread, 1);
-    thread t2(printThread, 2);
-    thread t3(printThread, 3);
-
+    thread t1(Thread, 1);
     t1.join();
+    thread t2(Thread, 2);
     t2.join();
+    thread t3(Thread, 3);
+
     t3.join();
 
     return 0;
