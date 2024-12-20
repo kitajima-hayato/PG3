@@ -1,42 +1,30 @@
-#include <fstream>
-#include <vector>
-#include <cstring>
 #include <iostream>
-#include <string> 
-#include <algorithm>
-#include <sstream>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
 using namespace std;
 
+mutex mtx;
+condition_variable cv;
+int turn = 1;
+
+void printThread(int id) {
+    unique_lock<mutex> lock(mtx);
+    cv.wait(lock, [id] { return id == turn; });
+    cout << "thread " << id << endl;
+    turn++;
+    cv.notify_all();
+}
+
 int main() {
-    vector<string> numbers;
-    ifstream file("File/PG3_2024_03_02.txt");
+    thread t1(printThread, 1);
+    thread t2(printThread, 2);
+    thread t3(printThread, 3);
 
-    if (file.is_open()) {
-        string line;
-        while (getline(file, line)) {
-            stringstream ss(line);
-            string item;
-            while (getline(ss, item, ',')) {
-                numbers.push_back(item);
-            }
-        }
-        file.close();
-    }
-    else {
-        cout << "Unable to open file" << endl;
-        return 1;
-    }
-
-   
-    sort(numbers.begin(), numbers.end());
-
-  
-    for (const auto& number : numbers) {
-        cout << number << endl;
-    }
+    t1.join();
+    t2.join();
+    t3.join();
 
     return 0;
 }
-
-
-
